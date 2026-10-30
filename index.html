@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Art Form Gips</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: beli sticky header, tamni hero sa ilustracijom enterijera, svetle sekcije sa belim karticama, zlatni akcenat */
+:root{
+  --bg:#F8F7F4;
+  --card:#FFFFFF;
+  --gold:#A9853F;        /* zlatni tekst i linije */
+  --gold-btn:#C8A65F;    /* zlatna dugmad */
+  --ink:#141A23;
+  --muted:#5F6772;
+  --line:#E7E3DA;
+  --dark:#121821;        /* hero, procena, podnožje */
+  --on-dark:#F4F1EA;
+  --on-gold:#17130A;
+  --map-bg:#EEF1F4;--map-road:#FFFFFF;--map-water:#CFE3F2;--map-pin:#3B7BC8;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --header-h:78px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1218;--card:#161C24;--gold:#D6B472;--gold-btn:#C8A65F;--ink:#EEF0F3;--muted:#A3ABB6;--line:#29313C;--dark:#0A0D12;--on-dark:#F4F1EA;--on-gold:#17130A;
+  --map-bg:#1C242E;--map-road:#26303C;--map-water:#1F3A52;--map-pin:#6FA6E6;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1218;--card:#161C24;--gold:#D6B472;--gold-btn:#C8A65F;--ink:#EEF0F3;--muted:#A3ABB6;--line:#29313C;--dark:#0A0D12;--on-dark:#F4F1EA;--on-gold:#17130A;
+  --map-bg:#1C242E;--map-road:#26303C;--map-water:#1F3A52;--map-pin:#6FA6E6;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 8px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--card)}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.08;margin:0;letter-spacing:-.02em}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{display:block;font:700 11.5px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+svg.i{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+
+/* Header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--card);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:var(--header-h)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+.mark{width:46px;height:46px;flex:none;color:var(--gold)}
+.word{display:grid;line-height:1}
+.word b{font:800 25px/1 var(--display);letter-spacing:.01em}
+.word i{font:600 13px/1 var(--body);font-style:normal;letter-spacing:.55em;color:var(--gold);margin-top:4px}
+.word small{font:700 9.5px/1 var(--body);letter-spacing:.14em;color:var(--muted);margin-top:7px;white-space:nowrap}
+nav.main ul{list-style:none;margin:0;padding:0;display:flex;gap:6px}
+nav.main a{display:block;padding:10px 12px;text-decoration:none;font-weight:500;color:var(--muted);position:relative}
+nav.main a:hover,nav.main a.active{color:var(--ink)}
+nav.main a::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .25s}
+nav.main a.active::after{transform:scaleX(1)}
+.burger{display:none;background:none;border:0;width:46px;height:46px;cursor:pointer;color:var(--ink);position:relative;flex:none}
+.burger span{position:absolute;left:9px;right:9px;height:2px;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
+.burger span:nth-child(1){top:15px}.burger span:nth-child(2){top:22px}.burger span:nth-child(3){top:29px}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (max-width:900px){
+  :root{--header-h:66px}
+  .mark{width:38px;height:38px}.word b{font-size:20px}.word i{font-size:11px}.word small{display:none}
+  .burger{display:block}
+  nav.main{position:absolute;left:0;right:0;top:100%;background:var(--card);border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .3s ease;box-shadow:0 14px 24px rgba(0,0,0,.08)}
+  nav.main.open{max-height:460px}
+  nav.main ul{flex-direction:column;gap:0;padding:6px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px))}
+  nav.main a{padding:15px 4px;font-size:18px;border-bottom:1px solid var(--line);color:var(--ink)}
+  nav.main a::after{left:4px;right:auto;width:28px;bottom:10px}
+}
+
+/* Hero */
+.hero{background:var(--dark);color:var(--on-dark);position:relative;overflow:hidden;isolation:isolate}
+.hero-art{position:absolute;inset:0;z-index:-2}
+.hero-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:70% 40%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(12,15,20,.88) 0%,rgba(12,15,20,.7) 35%,rgba(12,15,20,.25) 60%,rgba(12,15,20,.1) 100%),linear-gradient(0deg,rgba(12,15,20,.45),rgba(12,15,20,0) 35%)}
+.hero .wrap{padding-block:64px 56px}
+.hero-txt{max-width:560px}
+.hero .eyebrow{color:var(--on-dark);opacity:.85;margin-bottom:22px}
+.hero h1{font-size:clamp(42px,6.2vw,72px);font-weight:700}
+.hero h1 span{color:var(--gold-btn)}
+.hero p{font-size:18px;margin:22px 0 30px;max-width:44ch;opacity:.92}
+.btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 24px;border-radius:6px;font:600 16px/1 var(--body);text-decoration:none;border:1.5px solid currentColor;cursor:pointer;background:none;color:inherit;transition:background .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.gold{background:var(--gold-btn);border-color:var(--gold-btn);color:var(--on-gold)}
+.btn.gold:hover{background:#D5B470}
+.feats{display:flex;flex-wrap:wrap;gap:18px 34px;margin-top:40px;font-size:14px;line-height:1.3}
+.feats div{display:flex;align-items:center;gap:12px}
+.feats svg{width:30px;height:30px;color:var(--gold-btn)}
+@media (max-width:900px){
+  .hero-art img{object-position:62% 50%}
+  .hero::before{background:linear-gradient(180deg,rgba(12,15,20,.55),rgba(12,15,20,.72) 50%,rgba(12,15,20,.9) 100%)}
+  .hero .wrap{padding-block:32px 40px}
+  .hero .btns{flex-direction:column}
+  .hero .btns .btn{width:100%}
+}
+
+section.block{padding-block:64px 8px}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 32px;margin-bottom:28px}
+.head h2{font-size:clamp(30px,4vw,40px);margin-top:10px}
+.head p{max-width:56ch;color:var(--muted);margin:8px 0 0}
+.more{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-weight:600;text-decoration:none;background:none;border:0;font-size:16px;cursor:pointer;padding:6px 0}
+.more svg{width:18px;height:18px}
+
+/* Usluge */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc{background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(20,26,35,.04)}
+.svc .pic svg,.svc .pic img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:16/10}
+.svc .pic img{object-fit:cover;object-position:50% 25%}
+.svc .pic{position:relative;overflow:hidden}
+.svc .pic::after,.hero-art::after{content:"";position:absolute;inset:0;pointer-events:none;background:var(--card);opacity:.24}
+.svc .b{padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.svc h3{font-size:19px}
+.svc p{margin:0;color:var(--muted);font-size:14.5px;flex:1}
+.svc .price{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-top:8px}
+.svc .price b{display:block;color:var(--gold);font-size:18px;font-weight:600}
+.svc .price small{color:var(--gold);font-size:12px}
+.circ{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;background:none;cursor:pointer;flex:none;transition:background .2s,color .2s}
+.circ:hover{background:var(--gold);color:var(--card)}
+.circ svg{width:17px;height:17px}
+.zavrsni{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px 22px;display:grid;gap:14px}
+.zavrsni h3{font-size:19px}
+.zavrsni p{margin:0;font-size:13.5px;color:var(--muted)}
+.zlist{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.zlist button{display:grid;gap:3px;text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:600 15px var(--body);cursor:pointer;transition:border-color .2s}
+.zlist button:hover{border-color:var(--gold)}
+.zlist small{color:var(--gold);font-weight:600;font-size:13px}
+@media (max-width:1000px){.zlist{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:520px){.zlist{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:1000px){.services{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.services{grid-template-columns:1fr}}
+
+/* Galerija */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.gallery button{all:unset;cursor:pointer;display:block;border-radius:6px;overflow:hidden;position:relative;background:var(--card)}
+.gallery button svg,.gallery button img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;transition:transform .4s}
+.gallery button:hover img{transform:scale(1.04)}
+.gallery button:has(img)::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--card);opacity:.24}
+.gallery button span{z-index:2}
+.gallery button:hover svg{transform:scale(1.04)}
+.gallery button span{position:absolute;left:0;right:0;bottom:0;padding:24px 12px 10px;color:#fff;font-weight:600;font-size:14px;background:linear-gradient(transparent,rgba(10,13,18,.7));opacity:0;transition:opacity .25s}
+.gallery button:hover span,.gallery button:focus-visible span{opacity:1}
+.gallery button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media (hover:none){.gallery button span{opacity:1}}
+@media (max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,13,18,.9);display:grid;place-items:center;padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lightbox figure{margin:0;max-width:920px;width:100%;background:var(--card);border-radius:10px;overflow:hidden}
+.lightbox figure>div svg,.lightbox figure>div img{display:block;width:100%;height:auto;aspect-ratio:4/3;max-height:68vh;object-fit:cover}
+.lightbox figcaption{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.lightbox figcaption p{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+/* Kalkulator */
+.calc{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:20px;align-items:start}
+.calc form{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px;display:grid;gap:14px}
+.stavke{display:grid;gap:4px}
+.stavka{display:grid;grid-template-columns:40px minmax(0,1fr) 150px 40px;grid-template-areas:"n u q x" ". m m .";gap:10px 16px;align-items:end;padding:12px 0 14px;border-bottom:1px solid var(--line);animation:pojava .25s ease}
+@keyframes pojava{from{transform:translateY(6px);opacity:.4}}
+.num{grid-area:n;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font:600 16px var(--display);margin-bottom:4px}
+.f-u{grid-area:u}.f-q{grid-area:q}.ukloni{grid-area:x}.f-m{grid-area:m}
+.field{display:grid;gap:6px;min-width:0}
+.field label{font-size:13.5px;font-weight:600}
+select,input[type=number],input[type=text],input[type=email],input[type=tel],textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:11px 12px}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.area{display:flex;align-items:center;gap:8px}
+.area input{font-variant-numeric:tabular-nums;font-weight:600}
+.area span{color:var(--muted);font-size:14px;width:22px}
+.ukloni{width:40px;height:42px;border:0;background:none;color:var(--muted);cursor:pointer;border-radius:6px;display:grid;place-items:center}
+.ukloni:hover{color:var(--ink);background:var(--bg)}
+.check{display:flex;gap:10px;align-items:center;cursor:pointer;font-size:14.5px;font-weight:600;width:fit-content}
+.check input{width:20px;height:20px;margin:0;accent-color:var(--gold-btn);cursor:pointer;flex:none}
+.check small{font-weight:400;color:var(--muted)}
+.add{justify-self:start;display:inline-flex;align-items:center;gap:8px;border:1.5px dashed var(--gold);color:var(--gold);background:none;border-radius:6px;padding:12px 26px;font:600 15px var(--body);cursor:pointer;margin-top:6px}
+.add:hover{background:var(--bg)}
+.hint{margin:0;font-size:13.5px;color:var(--muted)}
+.result{background:var(--dark);color:var(--on-dark);border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:18px;position:sticky;top:calc(var(--header-h) + env(safe-area-inset-top,0px) + 16px)}
+.result .eyebrow{color:var(--on-dark);opacity:.75}
+.total{font:700 clamp(40px,5vw,52px)/1 var(--display);font-variant-numeric:tabular-nums;color:var(--on-dark)}
+.total small{font-size:.55em;margin-left:6px;color:var(--gold-btn)}
+.rows{display:grid;gap:10px;font-size:14px;font-variant-numeric:tabular-nums}
+.rows div{display:flex;justify-content:space-between;gap:14px}
+.rows span:first-child{min-width:0}
+.rows em{display:block;font-style:normal;font-size:12.5px;opacity:.6}
+.rows .sum{opacity:.8}
+.rows .sum.first{border-top:1px solid rgba(255,255,255,.14);padding-top:12px;margin-top:4px}
+.result .note{font-size:12.5px;opacity:.6;margin:0}
+.result .btn{color:var(--gold-btn);border-color:var(--gold-btn);padding:13px 18px;font-size:15px}
+@media (max-width:900px){.calc{grid-template-columns:1fr}.result{position:static}}
+@media (max-width:560px){
+  .calc form{padding:16px}
+  .stavka{grid-template-columns:34px minmax(0,1fr) 40px;grid-template-areas:"n u x" ". q ." ". m .";gap:10px 12px}
+}
+
+/* Lokacija + kontakt */
+.bottom{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:20px;padding-block:64px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px}
+.loc{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:24px}
+.panel h2{font-size:clamp(26px,3vw,30px);margin:8px 0 10px}
+.panel>p,.loc p{color:var(--muted);margin:0 0 20px;font-size:15px}
+.ilist{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:16px}
+.ilist li{display:flex;gap:14px;align-items:flex-start;font-weight:500;font-size:15px}
+.ilist svg{width:24px;height:24px;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{padding:4px 10px;border-radius:99px;border:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.mapcol{display:grid;gap:10px;align-content:start}
+.map{border-radius:6px;overflow:hidden;min-height:280px;position:relative;background:var(--map-bg)}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.mapcol a{justify-self:end;font-size:14px}
+.contact h2{margin-bottom:8px}
+.lines{display:grid;gap:8px;margin-bottom:16px}
+.ln{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:6px}
+.ln svg{width:19px;height:19px;color:var(--gold)}
+.ln .v{flex:1;min-width:0;font-weight:600;font-size:15px;overflow-wrap:anywhere;user-select:all}
+.copy{flex:none;padding:5px 10px;border-radius:5px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 12.5px var(--body);cursor:pointer}
+.copy:hover{border-color:var(--gold)}
+.cform{display:grid;gap:10px}
+.cform label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.cform .btn{width:100%;margin-top:4px}
+.status{margin:0;font-size:13px;color:var(--muted)}
+.status.ok{color:var(--ink);background:var(--bg);border-left:3px solid var(--gold);padding:10px 12px;border-radius:0 6px 6px 0}
+@media (max-width:1000px){.bottom{grid-template-columns:1fr}}
+@media (max-width:640px){.loc{grid-template-columns:1fr}.panel{padding:18px}}
+
+footer{background:var(--dark);color:var(--on-dark)}
+footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
+footer .brand .word small{display:none}
+footer .mark{width:40px;height:40px;color:var(--gold-btn)}
+footer .word b{font-size:20px}
+footer .word i{color:var(--gold-btn)}
+footer .tag{font-size:13px;opacity:.7;flex:1;min-width:200px}
+.soc{display:flex;gap:6px}
+.soc a,.upbtn{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;color:var(--on-dark);text-decoration:none}
+.soc a:hover{background:rgba(255,255,255,.08)}
+.upbtn{position:fixed;z-index:70;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border:1.5px solid var(--gold-btn);color:var(--gold-btn);background:var(--dark);cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:transform .2s,background .2s}
+.upbtn:hover{transform:translateY(-2px);background:var(--gold-btn);color:var(--on-gold)}
+.upbtn svg{width:20px;height:20px}
+@media (max-width:560px){.upbtn{right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:44px;height:44px}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#pocetna" aria-label="Art Form Gips, početna">
+      <svg class="mark" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="3" width="42" height="42"/><path d="M3 30h17v15M20 30V14h25M30 14v31"/></svg>
+      <span class="word"><b>ART FORM</b><i>GIPS</i><small>GIPSARSKI RADOVI · ADAPTACIJE ENTERIJERA</small></span>
+    </a>
+    <nav class="main" id="meni" aria-label="Glavni meni">
+      <ul>
+        <li><a href="#pocetna" class="active">Početna</a></li>
+        <li><a href="#usluge">Usluge</a></li>
+        <li><a href="#galerija">Galerija</a></li>
+        <li><a href="#kalkulator">Cene</a></li>
+        <li><a href="#lokacija">Lokacija</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+    <button class="burger" id="burger" aria-label="Otvori meni" aria-expanded="false" aria-controls="meni"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero" id="pocetna">
+  <div class="hero-art" aria-hidden="true"><img src="hero.jpg" alt="" fetchpriority="high"></div>
+  <div class="wrap">
+    <div class="hero-txt">
+      <span class="eyebrow">Moderni enterijeri · Precizna izvođenja</span>
+      <h1>Gips po meri <span>vašeg</span> prostora.</h1>
+      <p>Radimo spuštene plafone, pregradne zidove, TV zidove i kompletne adaptacije enterijera. Dolazimo na premer, dajemo cenu unapred i ostavljamo čist prostor.</p>
+      <div class="btns">
+        <a class="btn gold" href="#kalkulator"><i data-i="calc"></i>Izračunaj cenu</a>
+        <a class="btn" href="#kontakt"><i data-i="chat"></i>Zakaži premer</a>
+      </div>
+      <div class="feats">
+        <div><i data-i="shield"></i>Kvalitetna<br>izrada</div>
+        <div><i data-i="clock"></i>Dogovoreni<br>rokovi</div>
+        <div><i data-i="leaf"></i>Čist i uredan<br>prostor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+<section class="block" id="usluge">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="eyebrow">Usluge</span><h2>Šta radimo</h2><p>Od jednog plafona u kupatilu do kompletnog stana. Za vlažne prostorije koristimo impregnirane (zelene) ploče.</p></div>
+      <a class="more" href="#kalkulator">Cene usluga <i data-i="arrow"></i></a>
+    </div>
+    <div class="services">
+      <article class="svc"><div class="pic"><img src="plafon.jpg" alt="Spušten plafon sa LED kaskadom u dnevnoj sobi" loading="lazy"></div><div class="b"><h3>Spušteni plafoni</h3><p>Ravni plafoni na metalnoj podkonstrukciji, sa otvorima za ugradna svetla.</p><div class="price"><div><b>od 18 €/m²</b><small>sa materijalom</small></div><button class="circ" data-add="plafon" aria-label="Dodaj spušten plafon u kalkulator"><i data-i="arrow"></i></button></div></div></article>
+      <article class="svc"><div class="pic"><img src="kaskada.jpg" alt="Kaskadni plafon sa LED kanalima i drvenim lamelama" loading="lazy"></div><div class="b"><h3>Kaskade i LED kanali</h3><p>Kaskadni plafoni, svetlosni kanali i senke oko ivica sobe.</p><div class="price"><div><b>od 23 €/m</b><small>sa materijalom</small></div><button class="circ" data-add="led" aria-label="Dodaj LED kanal u kalkulator"><i data-i="arrow"></i></button></div></div></article>
+      <article class="svc"><div class="pic"><img src="zid.jpg" alt="Pregradni zidovi od gips ploča na metalnoj podkonstrukciji" loading="lazy" style="object-position:50% 50%"></div><div class="b"><h3>Pregradni zidovi</h3><p>Zidovi sa izolacijom od mineralne vune, jednostruka ili dvostruka obloga.</p><div class="price"><div><b>od 25 €/m²</b><small>sa materijalom</small></div><button class="circ" data-add="zid" aria-label="Dodaj pregradni zid u kalkulator"><i data-i="arrow"></i></button></div></div></article>
+      <article class="svc"><div class="pic"><img src="tv.jpg" alt="TV zid sa osvetljenim nišama i drvenim lamelama" loading="lazy" style="object-position:55% 50%"></div><div class="b"><h3>TV zidovi i niše</h3><p>Dekorativni zidovi sa nišama, policama i skrivenim osvetljenjem.</p><div class="price"><div><b>po dogovoru</b><small>posle premera</small></div><a class="circ" href="#kontakt" aria-label="Pošalji upit za TV zid"><i data-i="arrow"></i></a></div></div></article>
+    </div>
+    <div class="zavrsni">
+      <h3>Završni i prateći radovi</h3>
+      <div class="zlist">
+        <button data-add="bandaz">Bandažiranje<small>od 3 €/m</small></button>
+        <button data-add="glet">Gletovanje<small>od 5,5 €/m²</small></button>
+        <button data-add="smirgl">Šmirglanje<small>od 1,8 €/m²</small></button>
+        <button data-add="krec">Krečenje<small>od 4,5 €/m²</small></button>
+        <button data-add="spalet">Obrada špaletni<small>od 8 €/m</small></button>
+        <button data-add="vrata">Ugradnja vrata<small>od 50 €/kom</small></button>
+      </div>
+      <p>Dodirnite stavku da je dodate u kalkulator. Cene su sa materijalom.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="galerija">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="eyebrow">Galerija</span><h2>Naši radovi</h2><p>Dodirnite rad za veći prikaz i opis.</p></div>
+      <button class="more" id="sve" aria-expanded="false">Pogledaj sve <i data-i="arrow"></i></button>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section class="block" id="kalkulator">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="eyebrow">Kalkulator cena</span><h2>Okvirna cena za vaš posao</h2><p>Izaberite vrstu radova i unesite površinu. Dodajte još radova po potrebi. Tačnu cenu dajemo posle besplatnog premera.</p></div>
+    </div>
+    <div class="calc">
+      <form id="calc" onsubmit="return false">
+        <div class="stavke" id="stavke"></div>
+        <button type="button" class="add" id="dodaj"><i data-i="plus"></i>Dodaj radove</button>
+        <p class="hint">Za svaku stavku birate da li je sa materijalom. Isključite ako materijal nabavljate sami.</p>
+      </form>
+      <div class="result" aria-live="polite">
+        <span class="eyebrow">Procena</span>
+        <div class="total" id="total">0 €</div>
+        <div class="rows" id="rows"></div>
+        <p class="note">Cene su orijentacione i ne uključuju PDV ni demontažu starog plafona.</p>
+        <a class="btn" href="#kontakt" id="posalji">Pošalji upit sa ovom procenom</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="bottom">
+    <section class="panel" id="lokacija">
+      <div class="loc">
+        <div>
+          <span class="eyebrow">Lokacija</span>
+          <h2>Gde radimo</h2>
+          <p>Sedište je u Novom Sadu, a radimo i u okolnim mestima. Za veće poslove dolazimo i dalje.</p>
+          <ul class="ilist">
+            <li><i data-i="pin"></i>Novi Sad, Srbija</li>
+            <li><i data-i="clock"></i><span>Pon–Pet 7–17 h<br>Sub 8–13 h</span></li>
+            <li><i data-i="truck"></i><span>Besplatan premer<br>na teritoriji Novog Sada</span></li>
+          </ul>
+          <div class="chips"><span>Novi Sad</span><span>Petrovaradin</span><span>Sremska Kamenica</span><span>Veternik</span><span>Futog</span><span>Temerin</span><span>Sremski Karlovci</span></div>
+        </div>
+        <div class="mapcol">
+          <div class="map" aria-label="Šematska mapa područja rada">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="300" style="fill:var(--map-bg)"/>
+              <g style="stroke:var(--map-road)" stroke-width="5" fill="none" stroke-linecap="round">
+                <path d="M-10 90 C90 110 160 80 230 120 S340 150 410 130"/><path d="M120 -10 C140 80 170 150 160 310"/><path d="M260 -10 C250 70 280 140 300 310"/><path d="M-10 170 C80 160 140 180 210 170"/>
+              </g>
+              <path d="M-10 225 C70 205 130 245 205 222 S320 185 410 205" style="fill:none;stroke:var(--map-water)" stroke-width="22"/>
+              <circle cx="200" cy="150" r="88" style="fill:var(--map-pin);stroke:var(--map-pin)" fill-opacity=".07" stroke-dasharray="5 6" stroke-width="1.5"/>
+              <g style="fill:var(--muted);font:500 11px var(--body)">
+                <circle cx="140" cy="122" r="3.5" style="fill:var(--ink)"/><text x="102" y="114">Veternik</text>
+                <circle cx="92" cy="160" r="3.5" style="fill:var(--ink)"/><text x="68" y="180">Futog</text>
+                <circle cx="252" cy="246" r="3.5" style="fill:var(--ink)"/><text x="236" y="266">Petrovaradin</text>
+                <circle cx="168" cy="252" r="3.5" style="fill:var(--ink)"/><text x="110" y="276">Sr. Kamenica</text>
+                <circle cx="282" cy="80" r="3.5" style="fill:var(--ink)"/><text x="276" y="70">Temerin</text>
+              </g>
+              <g transform="translate(196 158)"><path d="M0 0C-13-17-13-34 0-36C13-34 13-17 0 0Z" style="fill:var(--map-pin)"/><circle cy="-24" r="5" fill="#fff"/></g>
+              <rect x="212" y="128" width="66" height="22" rx="4" style="fill:var(--card)"/>
+              <text x="220" y="144" style="fill:var(--ink);font:700 13px var(--body)">Novi Sad</text>
+            </svg>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Novi+Sad" target="_blank" rel="noopener" class="more">Otvori u Google mapama <i data-i="arrow"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel contact" id="kontakt">
+      <span class="eyebrow">Kontakt</span>
+      <h2>Zakažite premer</h2>
+      <p>Pozovite ili pošaljite poruku na Viber. Odgovaramo istog dana.</p>
+      <div class="lines">
+        <div class="ln"><i data-i="phone"></i><span class="v" id="tel">+381 60 123 4567</span><button class="copy" data-copy="tel" aria-label="Kopiraj broj telefona">Kopiraj</button></div>
+        <div class="ln"><i data-i="mail"></i><span class="v" id="mail">info@artformgips.rs</span><button class="copy" data-copy="mail" aria-label="Kopiraj e-poštu">Kopiraj</button></div>
+      </div>
+      <form class="cform" id="cform" novalidate>
+        <label for="ime">Ime i prezime</label><input type="text" id="ime" autocomplete="name" placeholder="Ime i prezime" required>
+        <label for="telefon">Telefon / Viber</label><input type="tel" id="telefon" autocomplete="tel" placeholder="Telefon / Viber" required>
+        <label for="email">E-pošta</label><input type="email" id="email" autocomplete="email" placeholder="E-pošta (nije obavezno)">
+        <label for="poruka">Opis posla</label><textarea id="poruka" rows="4" placeholder="Npr. spušten plafon u dnevnoj sobi, oko 24 m², sa LED kanalom."></textarea>
+        <button class="btn gold" type="submit"><i data-i="send"></i>Pripremi upit</button>
+        <p class="status" id="status">Upit se kopira, pa ga nalepite u Viber ili mejl.</p>
+      </form>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#pocetna" aria-label="Art Form Gips, na vrh">
+      <svg class="mark" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="3" width="42" height="42"/><path d="M3 30h17v15M20 30V14h25M30 14v31"/></svg>
+      <span class="word"><b>ART FORM</b><i>GIPS</i></span>
+    </a>
+    <span class="tag">Gipsarski radovi · Adaptacije enterijera · Novi Sad</span>
+    <div class="soc">
+      <a href="https://www.instagram.com/artformgips" target="_blank" rel="noopener" aria-label="Instagram"><i data-i="insta"></i></a>
+      <a href="https://www.facebook.com/artformgips" target="_blank" rel="noopener" aria-label="Facebook"><i data-i="fb"></i></a>
+    </div>
+    <button class="upbtn" id="gore" aria-label="Na vrh stranice"><i data-i="up"></i></button>
+  </div>
+</footer>
+
+<div class="lightbox" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-t">
+  <figure><div id="lb-img"></div><figcaption><div><strong id="lb-t"></strong><p id="lb-d"></p></div><button class="copy" id="lb-x">Zatvori</button></figcaption></figure>
+</div>
+
+<script>
+// Ikonice
+const IC={
+ calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h.01M15.5 18h.01"/>',
+ chat:'<path d="M4 5h16v11H9l-5 4z"/>',
+ shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ leaf:'<path d="M5 19C5 10 10 5 20 4c-1 10-6 15-15 15z"/><path d="M5 19l8-8"/>',
+ arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ pin:'<path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+ truck:'<path d="M2 6h12v10H2zM14 9h4l3 3v4h-7"/><circle cx="6" cy="17.5" r="2" fill="currentColor"/><circle cx="17" cy="17.5" r="2" fill="currentColor"/>',
+ trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',
+ phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>',
+ mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+ send:'<path d="M21 3L3 10.5l7 2.5 2.5 7z"/><path d="M10 13L21 3"/>',
+ up:'<path d="M12 19V5M6 11l6-6 6 6"/>',
+ insta:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/>',
+ fb:'<path d="M14 8h3V4h-3a4 4 0 00-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>'
+};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
+document.querySelectorAll('i[data-i]').forEach(el=>el.outerHTML=ic(el.dataset.i));
+
+// Meni
+const burger=document.getElementById('burger'),nav=document.getElementById('meni');
+function setMenu(o){nav.classList.toggle('open',o);burger.setAttribute('aria-expanded',o);burger.setAttribute('aria-label',o?'Zatvori meni':'Otvori meni')}
+burger.addEventListener('click',()=>setMenu(!nav.classList.contains('open')));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+const links=[...nav.querySelectorAll('a')];
+try{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+['pocetna','usluge','galerija','kalkulator','lokacija','kontakt'].forEach(id=>io.observe(document.getElementById(id)))}catch(e){}
+document.getElementById('gore').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+// Ilustracije enterijera
+let sid=0;
+function scene(k){
+  const u='sc'+(++sid),G='#FFC978';
+  let bx=[90,70,310,225];if(k==='hodnik')bx=[160,100,240,200];
+  const [x1,y1,x2,y2]=bx;
+  const dark=k==='hero';
+  const defs=`<defs><filter id="${u}b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="${u}s" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="12"/></filter>
+  <linearGradient id="${u}f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark?'#8A6646':'#C9A27A'}"/><stop offset="1" stop-color="${dark?'#4A3424':'#8C6744'}"/></linearGradient>
+  <linearGradient id="${u}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark?'#C9C0B2':'#F1ECE4'}"/><stop offset="1" stop-color="${dark?'#9F978A':'#DDD5C9'}"/></linearGradient>
+  <linearGradient id="${u}c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark?'#B9B1A5':'#F8F6F1'}"/><stop offset="1" stop-color="${dark?'#D8D0C3':'#ECE6DC'}"/></linearGradient>
+  <radialGradient id="${u}r"><stop offset="0" stop-color="${G}" stop-opacity=".9"/><stop offset="1" stop-color="${G}" stop-opacity="0"/></radialGradient></defs>`;
+  const glowLine=(d,w=3)=>`<path d="${d}" stroke="${G}" stroke-width="${w*4}" fill="none" opacity=".55" filter="url(#${u}b)"/><path d="${d}" stroke="#FFE7BF" stroke-width="${w}" fill="none"/>`;
+  const room=`<path d="M0 0H400L${x2} ${y1}H${x1}Z" fill="url(#${u}c)"/><path d="M0 0L${x1} ${y1}V${y2}L0 300Z" fill="${dark?'#A79F92':'#E2DBCF'}"/><path d="M400 0L${x2} ${y1}V${y2}L400 300Z" fill="${dark?'#9C9487':'#D9D1C4'}"/><rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="url(#${u}w)"/><path d="M0 300L${x1} ${y2}H${x2}L400 300Z" fill="url(#${u}f)"/>`;
+  const tray=(c='#FBF9F5')=>`<path d="M55 0H345L282 44H118Z" fill="${c}"/><path d="M118 44H282V48H118Z" fill="#E1D9CC"/>${glowLine('M120 48H280',2.5)}${glowLine('M57 2L118 46M343 2L282 46',2)}`;
+  const downl=(pts)=>pts.map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="5" ry="2" fill="#FFF3D9"/><circle cx="${x}" cy="${y+30}" r="26" fill="url(#${u}r)" opacity=".35"/>`).join('');
+  const sofa=(x=135,c='#8F9194')=>`<ellipse cx="${x+65}" cy="236" rx="80" ry="7" fill="#000" opacity=".15"/><rect x="${x}" y="196" width="130" height="20" rx="5" fill="${c}"/><rect x="${x-6}" y="208" width="142" height="24" rx="6" fill="#A2A4A7"/><rect x="${x+8}" y="200" width="30" height="16" rx="4" fill="#C9BBA6"/><rect x="${x+92}" y="200" width="30" height="16" rx="4" fill="#BFC3C7"/>`;
+  const plant=(x,y=230,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M-9 0h18l-3-20h-12z" fill="#6E5A47"/>${[-40,-20,0,20,40,-60,60].map((a,i)=>`<ellipse cx="0" cy="-${34+i%3*6}" rx="5" ry="${18+i%2*5}" fill="${i%2?'#3E5C31':'#557A41'}" transform="rotate(${a} 0 -20)"/>`).join('')}</g>`;
+  const slats=(x,w,y=y1,h=y2-y1)=>{let s='';for(let i=0;i<w;i+=7)s+=`<rect x="${x+i}" y="${y}" width="4.5" height="${h}" fill="#8A5E3B"/><rect x="${x+i+4.5}" y="${y}" width="2.5" height="${h}" fill="#5E3E26"/>`;return s};
+  const tv=`<rect x="128" y="${y1}" width="150" height="${y2-y1}" fill="${dark?'#B5AC9E':'#E6E0D6'}"/>${slats(282,28)}<rect x="152" y="105" width="102" height="58" rx="2" fill="#121417"/><rect x="155" y="108" width="96" height="52" fill="#1C2026"/>${glowLine('M152 165H254',1.5)}<rect x="138" y="196" width="130" height="16" fill="#CFC5B6"/>${glowLine('M140 213H266',2)}`;
+  const pendant=(x)=>`<path d="M${x} 0V92" stroke="#2A2A2A" stroke-width="1.2"/><path d="M${x-9} 92h18l5 14h-28z" fill="#2B2B2B"/><ellipse cx="${x}" cy="108" rx="16" ry="5" fill="${G}" filter="url(#${u}b)"/><circle cx="${x}" cy="130" r="40" fill="url(#${u}r)" opacity=".35"/>`;
+  const win=`<rect x="98" y="88" width="56" height="110" fill="#CFE2EC"/><rect x="98" y="88" width="56" height="110" fill="none" stroke="#F4F1EC" stroke-width="3"/><path d="M126 88V198M98 140H154" stroke="#F4F1EC" stroke-width="2.5"/><path d="M98 160L154 130V198H98Z" fill="#B7D4A9" opacity=".6"/>`;
+  let s=room;
+  switch(k){
+   case 'hero': s+=tray('#CFC7BA')+tv+pendant(330)+sofa(60,'#7D7F82')+plant(352,238,1.2)+plant(112,212,.7);break;
+   case 'plafon': s+=downl([[150,30],[250,30],[200,52]])+win+sofa(170)+plant(330,235);break;
+   case 'kaskada': s+=tray()+win+sofa(170,'#8A8C8F')+plant(330,235,.9);break;
+   case 'zid': {let st='';for(let x=150;x<=250;x+=20)st+=`<rect x="${x}" y="80" width="4" height="150" fill="#BFC5CC"/>`;s+=`<rect x="146" y="78" width="112" height="5" fill="#AEB5BD"/><rect x="146" y="228" width="112" height="5" fill="#AEB5BD"/>${st}<rect x="150" y="83" width="54" height="145" fill="#F2F0EC"/><path d="M177 83V228" stroke="#E0DCD4"/><rect x="152" y="140" width="50" height="40" fill="#F7E7A6" opacity=".55"/><path d="M290 230l14-120h4l14 120M296 190h20M300 150h12" stroke="#7B828A" stroke-width="3" fill="none"/>`;break}
+   case 'tv': s+=tray()+tv+plant(330,238,1.1);break;
+   case 'spavaca': s+=tray('#FAF7F2')+slats(130,140,90,110)+`<rect x="110" y="196" width="180" height="40" rx="4" fill="#F1EEE8"/><rect x="110" y="214" width="180" height="22" rx="3" fill="#B6A58E"/><rect x="130" y="186" width="56" height="18" rx="6" fill="#FAF8F4"/><rect x="214" y="186" width="56" height="18" rx="6" fill="#FAF8F4"/><rect x="88" y="200" width="18" height="22" fill="#6E5139"/><rect x="294" y="200" width="18" height="22" fill="#6E5139"/>`+pendant(97)+pendant(303);break;
+   case 'kupatilo': {let t='';for(let x=x1;x<x2;x+=22)t+=`<path d="M${x} ${y1}V${y2}" stroke="#C9D3D2"/>`;for(let y=y1;y<y2;y+=22)t+=`<path d="M${x1} ${y}H${x2}" stroke="#C9D3D2"/>`;s+=`<path d="M0 0H400L${x2} ${y1}H${x1}Z" fill="#8FBDB2"/><path d="M40 0H360L300 52H100Z" fill="#A6CEC4"/>`+downl([[160,26],[240,26]])+`<rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="#E9EEEC"/>${t}<rect x="205" y="78" width="70" height="150" fill="#D9ECEF" opacity=".5" stroke="#9AB2B6" stroke-width="2"/><path d="M240 78v16M230 94h20" stroke="#8D949A" stroke-width="3"/><rect x="108" y="180" width="70" height="40" fill="#F7F7F5"/><ellipse cx="143" cy="182" rx="26" ry="5" fill="#E1E5E4"/><rect x="118" y="120" width="50" height="40" fill="#D3E2E8" stroke="#BCC6CA"/>`;break}
+   case 'senka': s=`<rect width="400" height="300" fill="#F3F0EB"/><path d="M0 210L400 120V128L0 218Z" fill="#E1DBD1"/><path d="M180 300L400 30V70L215 300Z" fill="#121315"/>${[0,1,2,3].map(i=>{const x=232+i*44,y=258-i*54;return `<circle cx="${x}" cy="${y}" r="7" fill="#FFF0D0"/><circle cx="${x}" cy="${y}" r="16" fill="${G}" opacity=".5" filter="url(#${u}b)"/>`}).join('')}<path d="M0 0L130 300" stroke="#E6E0D6" stroke-width="40"/>`;break;
+   case 'luk': s+=`<rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="#E8E2D8"/><path d="M155 225V145A45 45 0 0 1 245 145V225Z" fill="#B9AD9B"/><path d="M155 225V145A45 45 0 0 1 245 145V225" fill="none" stroke="#F6F3EE" stroke-width="5"/><path d="M175 225V165A25 25 0 0 1 225 165V225Z" fill="#9F937F"/>`+plant(110,232,.9)+plant(290,232,.9)+downl([[200,30]]);break;
+   case 'hodnik': s+=`<path d="M190 0L196 100H204L210 0Z" fill="#EAE3D8"/>`+glowLine('M200 0V100',3)+`<rect x="185" y="125" width="30" height="75" fill="#A88661"/>`+[60,330].map(x=>`<rect x="${x-14}" y="110" width="28" height="40" fill="#C8BBA8" opacity=".7"/>`).join('');break;
+  }
+  return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${defs}${s}</svg>`;
+}
+document.querySelectorAll('[data-scene]').forEach(el=>el.innerHTML=scene(el.dataset.scene));
+
+
+// Galerija
+const works=[
+ {k:'kaskada',img:'g-kaskada.jpg',t:'Kaskadni plafon sa LED',m:'32 m²',d:'Dnevna soba, kaskada sa toplim LED kanalom po obodu.'},
+ {k:'spavaca',img:'g-spavaca.jpg',t:'Spavaća soba',m:'16 m²',d:'Kaskada sa skrivenom rasvetom i zid sa drvenim lamelama.'},
+ {k:'kupatilo',img:'g-kupatilo.jpg',t:'Plafon u kupatilu',m:'6 m²',d:'Impregnirane ploče, ugradne IP44 lampe i otvor za ventilator.'},
+ {k:'senka',img:'g-senka.jpg',t:'Senka i linijska rasveta',m:'18 m',d:'Senka 20 mm uz zid i crna linijska šina sa spotovima.'},
+ {k:'zid',t:'Pregradni zid',m:'14 m²',d:'Zid 100 mm sa mineralnom vunom, dvostruka obloga.'},
+ {k:'tv',t:'TV zid sa lamelama',m:'8 m²',d:'Zid sa nišom za TV, LED trakom i drvenim lamelama.'},
+ {k:'luk',t:'Lučni prolaz',m:'2,4 m',d:'Luk od savijene ploče 6,5 mm na zakrivljenom profilu.'},
+ {k:'hodnik',t:'Hodnik sa LED linijom',m:'9 m²',d:'Spušten plafon sa ugradnom LED linijom celom dužinom.'}
+];
+const g=document.getElementById('gallery'),sve=document.getElementById('sve');
+const media=w=>w.img?`<img src="${w.img}" alt="" loading="lazy">`:scene(w.k);
+works.forEach((w,i)=>{w.svg=media(w);const b=document.createElement('button');b.setAttribute('aria-label',w.t+', '+w.m);b.innerHTML=w.svg+`<span>${w.t} · ${w.m}</span>`;if(i>3)b.hidden=true;b.onclick=()=>openLb(i);g.appendChild(b)});
+sve.onclick=()=>{const o=sve.getAttribute('aria-expanded')!=='true';[...g.children].forEach((b,i)=>{if(i>3)b.hidden=!o});sve.setAttribute('aria-expanded',o);sve.innerHTML=(o?'Prikaži manje ':'Pogledaj sve ')+ic('arrow')};
+const lb=document.getElementById('lb');let lastBtn=null;
+function openLb(i){const w=works[i];lastBtn=document.activeElement;document.getElementById('lb-img').innerHTML=media(w);document.getElementById('lb-t').textContent=w.t+' · '+w.m;document.getElementById('lb-d').textContent=w.d;lb.hidden=false;document.getElementById('lb-x').focus()}
+function closeLb(){lb.hidden=true;lastBtn&&lastBtn.focus()}
+document.getElementById('lb-x').onclick=closeLb;
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!lb.hidden)closeLb();setMenu(false)}});
+
+// Kalkulator (cene u € po jedinici: rad / materijal)
+const usluge=[
+ {id:'plafon',n:'Spušten plafon (ravan)',u:'m²',rad:10,mat:8},
+ {id:'kaskada',n:'Kaskadni plafon',u:'m²',rad:16,mat:11},
+ {id:'led',n:'LED kanal / senka',u:'m',rad:15,mat:8},
+ {id:'zid',n:'Pregradni zid sa izolacijom',u:'m²',rad:13,mat:12},
+ {id:'obloga',n:'Oblaganje zidova',u:'m²',rad:8,mat:7},
+ {id:'kupatilo',n:'Plafon u kupatilu',u:'m²',rad:12,mat:10},
+ {id:'bandaz',n:'Bandažiranje spojeva',u:'m',rad:2,mat:1},
+ {id:'glet',n:'Gletovanje',u:'m²',rad:4,mat:1.5},
+ {id:'smirgl',n:'Šmirglanje',u:'m²',rad:1.5,mat:0.3},
+ {id:'krec',n:'Krečenje (2 sloja)',u:'m²',rad:3,mat:1.5},
+ {id:'spalet',n:'Obrada špaletni',u:'m',rad:6,mat:2},
+ {id:'vrata',n:'Ugradnja vrata',u:'kom',rad:40,mat:10}
+];
+const fmt=n=>n.toLocaleString('sr-RS',{maximumFractionDigits:0})+' €';
+const stavkeEl=document.getElementById('stavke'),rowsEl=document.getElementById('rows'),dodaj=document.getElementById('dodaj');
+let procena='',nid=0;
+function addItem(id,q,m,focus){
+  const n=++nid,d=document.createElement('div');d.className='stavka';
+  d.innerHTML=`<span class="num"></span>
+  <div class="field f-u"><label for="s${n}-u">Vrsta radova</label><select id="s${n}-u">${usluge.map(u=>`<option value="${u.id}"${u.id===id?' selected':''}>${u.n}</option>`).join('')}</select></div>
+  <div class="field f-q"><label for="s${n}-q" class="ql">Površina</label><div class="area"><input type="number" id="s${n}-q" min="0" max="2000" step="0.5" value="${q}" inputmode="decimal"><span class="jed">m²</span></div></div>
+  <button type="button" class="ukloni">${ic('trash')}</button>
+  <label class="check f-m" for="s${n}-m"><input type="checkbox" id="s${n}-m"${m?' checked':''}>Sa materijalom <small>ploče, profili, vijci, masa</small></label>`;
+  d.querySelector('.ukloni').onclick=()=>{d.remove();calc();dodaj.focus()};
+  d.addEventListener('input',calc);d.addEventListener('change',calc);
+  stavkeEl.appendChild(d);calc();
+  if(focus)d.querySelector('select').focus({preventScroll:true});
+  return d;
+}
+function calc(){
+  const items=[...stavkeEl.querySelectorAll('.stavka')];let rad=0,mt=0,rows='';const parts=[];
+  items.forEach((d,i)=>{
+    const u=usluge.find(x=>x.id===d.querySelector('select').value);
+    const q=Math.max(0,parseFloat(String(d.querySelector('input[type=number]').value).replace(',','.'))||0);
+    const m=d.querySelector('input[type=checkbox]').checked;
+    d.querySelector('.num').textContent=i+1;
+    d.querySelector('.jed').textContent=u.u;
+    d.querySelector('.ql').textContent=u.u==='m'?'Dužina':u.u==='kom'?'Broj komada':'Površina';
+    const ub=d.querySelector('.ukloni');ub.hidden=items.length===1;ub.setAttribute('aria-label','Ukloni stavku '+(i+1));
+    const r=u.rad*q,mm=m?u.mat*q:0;rad+=r;mt+=mm;
+    const qs=q.toLocaleString('sr-RS');
+    rows+=`<div><span>${i+1}. ${u.n} · ${qs} ${u.u}<em>${m?'sa materijalom':'bez materijala'}</em></span><span>${fmt(r+mm)}</span></div>`;
+    parts.push(`${u.n}, ${qs} ${u.u}, ${m?'sa materijalom':'bez materijala'} (${fmt(r+mm)})`);
+  });
+  rows+=`<div class="sum first"><span>Rad ukupno</span><span>${fmt(rad)}</span></div><div class="sum"><span>Materijal ukupno</span><span>${mt?fmt(mt):'—'}</span></div>`;
+  rowsEl.innerHTML=rows;
+  document.getElementById('total').innerHTML=fmt(rad+mt).replace(' €','<small>€</small>');
+  procena='Radovi:\n'+parts.map(p=>'- '+p).join('\n')+`\nUkupna procena: ${fmt(rad+mt)}`;
+}
+dodaj.onclick=()=>addItem('zid',10,true,true);
+addItem('plafon',24,true);
+document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{
+  let d=[...stavkeEl.querySelectorAll('.stavka')].find(x=>x.querySelector('select').value===b.dataset.add);
+  if(!d){const all=stavkeEl.querySelectorAll('.stavka');if(all.length===1){d=all[0];d.querySelector('select').value=b.dataset.add;calc()}else d=addItem(b.dataset.add,b.dataset.add==='led'?12:20,true)}
+  document.getElementById('kalkulator').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>d.querySelector('input[type=number]').focus({preventScroll:true}),500);
+}));
+document.getElementById('posalji').addEventListener('click',()=>{const p=document.getElementById('poruka');const bez=p.value.replace(/Radovi:[\s\S]*?Ukupna procena:[^\n]*/,'').trim();p.value=(bez?bez+'\n\n':'')+procena});
+
+// Kopiranje
+async function copyText(t,btn){try{await navigator.clipboard.writeText(t);if(btn){const o=btn.textContent;btn.textContent='Kopirano';setTimeout(()=>btn.textContent=o,1500)}return true}catch(e){return false}}
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const el=document.getElementById(b.dataset.copy);if(!await copyText(el.textContent,b)){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}}));
+
+// Kontakt forma
+document.getElementById('cform').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const ime=document.getElementById('ime').value.trim(),tel=document.getElementById('telefon').value.trim(),st=document.getElementById('status');
+  if(!ime||!tel){st.className='status';st.textContent='Upišite ime i broj telefona da bismo mogli da vas pozovemo.';(ime?document.getElementById('telefon'):document.getElementById('ime')).focus();return}
+  const txt=`Upit za Art Form Gips\nIme: ${ime}\nTelefon: ${tel}\nE-pošta: ${document.getElementById('email').value||'-'}\n\n${document.getElementById('poruka').value}`;
+  const ok=await copyText(txt);
+  const T=document.getElementById('tel').textContent,M=document.getElementById('mail').textContent;
+  st.className='status ok';
+  st.textContent=ok?`Upit je kopiran. Nalepite ga u Viber poruku na ${T} ili u mejl na ${M}.`:`Upit je spreman. Pošaljite ga na Viber ${T} ili na ${M}.`;
+});
+</script>
+
+</body>
+</html>
